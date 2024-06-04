@@ -20,4 +20,22 @@ const formatDate = (isoDateString: string) => {
   return `${day}/${month}/${year}`;
 };
 
-export { formatPhoneNumber, formatDate };
+const removeAccents = (str: string) => {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
+const cleanPhoneNumber = (phoneNumber: string) => {
+  return phoneNumber.replace(/[+\-()\s]/g, "");
+};
+
+const normalizeSearch = (str: string) => {
+  return removeAccents(cleanPhoneNumber(str.toLowerCase()));
+};
+
+export {
+  formatPhoneNumber,
+  formatDate,
+  removeAccents,
+  cleanPhoneNumber,
+  normalizeSearch,
+};
