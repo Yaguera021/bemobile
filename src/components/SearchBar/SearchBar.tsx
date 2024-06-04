@@ -1,6 +1,6 @@
-import Lupa from "../../assets/images/Lupa.png";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Employees } from "../../types/Employees";
+import Lupa from "../../assets/images/Lupa.png";
 import {
   cleanPhoneNumber,
   normalizeSearch,
@@ -20,24 +20,27 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    const filteredEmployees =
-      search.length > 0
-        ? employees.filter((employee) => {
-            const normalizedSearch = normalizeSearch(search);
-            const normalizedName = removeAccents(employee.name.toLowerCase());
-            const normalizedRole = removeAccents(employee.job.toLowerCase());
-            const formattedPhone = cleanPhoneNumber(employee.phone);
+  console.log("Renderizou");
 
-            return (
-              normalizedName.includes(normalizedSearch) ||
-              normalizedRole.includes(normalizedSearch) ||
-              formattedPhone.includes(normalizedSearch)
-            );
-          })
-        : [];
-    setFilteredEmployees(filteredEmployees);
-  }, [search, employees]);
+  const normalizedSearch = normalizeSearch(search);
+  const filteredEmployees = employees.filter((employee) => {
+    const normalizedName = removeAccents(employee.name.toLowerCase());
+    const normalizedRole = removeAccents(employee.job.toLowerCase());
+    const formattedPhone = cleanPhoneNumber(employee.phone);
+    return (
+      normalizedName.includes(normalizedSearch) ||
+      normalizedRole.includes(normalizedSearch) ||
+      formattedPhone.includes(normalizedSearch)
+    );
+  });
+
+  useEffect(() => {
+    if (search) {
+      setFilteredEmployees(filteredEmployees);
+    } else {
+      setFilteredEmployees([]);
+    }
+  }, [search]);
 
   return (
     <div className='input-container'>
@@ -54,5 +57,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </div>
   );
 };
+const memoizedSearchBar = React.memo(SearchBar);
 
-export default SearchBar;
+export default memoizedSearchBar;
