@@ -3,16 +3,16 @@ import React, { useEffect, useState } from "react";
 import { fetchEmployees } from "../../services/api";
 import { Employees } from "../../types/Employees";
 
-import aDown from "../../assets/arrow-down.svg";
-import aUp from "../../assets/arrow-up.svg";
 import ellipse from "../../assets/ellipse.svg";
 
 import "./Table.scss";
-import { formatDate, formatPhoneNumber } from "../../utils/formatFunctions";
+import SearchBar from "../SearchBar/SearchBar";
+import TableRow from "../TableRow/TableRow";
 
-const Table = () => {
+const Table: React.FC = () => {
   const [allEmployees, setAllEmployees] = useState<Employees[]>([]);
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<Employees[]>([]);
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -34,7 +34,10 @@ const Table = () => {
     <div>
       <div className='top-wrapper'>
         <h4>Funcionários</h4>
-        <div>SearchBar</div>
+        <SearchBar
+          employees={allEmployees}
+          setFilteredEmployees={setFilteredEmployees}
+        />
       </div>
       <table className='table'>
         <thead>
@@ -47,49 +50,23 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {allEmployees.map((employee) => (
-            <React.Fragment key={employee.id}>
-              <tr>
-                <td>
-                  <img src={employee.image} alt={employee.name} />
-                </td>
-                <td>{employee.name}</td>
-                <td>
-                  <button onClick={() => toggleRow(Number(employee.id))}>
-                    {expandedRows.includes(Number(employee.id)) ? (
-                      <img src={aDown} alt='arrow-down' />
-                    ) : (
-                      <img src={aUp} alt='arrow-up' />
-                    )}
-                  </button>
-                </td>
-              </tr>
-              {expandedRows.includes(Number(employee.id)) && (
-                <tr className='expanded-items'>
-                  <td>
-                    <div className='details'>
-                      <p>
-                        <strong>Cargo</strong>
-                        <span className='right-align'>{employee.job}</span>
-                      </p>
-                      <p>
-                        <strong>Data de admissão</strong>{" "}
-                        <span className='right-align'>
-                          {formatDate(employee.admission_date)}
-                        </span>
-                      </p>
-                      <p>
-                        <strong>Telefone</strong>
-                        <span className='right-align'>
-                          {formatPhoneNumber(employee.phone)}
-                        </span>
-                      </p>
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </React.Fragment>
-          ))}
+          {filteredEmployees.length > 0
+            ? filteredEmployees.map((employee) => (
+                <TableRow
+                  key={employee.id}
+                  employee={employee}
+                  expandedRows={expandedRows}
+                  toggleRow={toggleRow}
+                />
+              ))
+            : allEmployees.map((employee) => (
+                <TableRow
+                  key={employee.id}
+                  employee={employee}
+                  expandedRows={expandedRows}
+                  toggleRow={toggleRow}
+                />
+              ))}
         </tbody>
       </table>
     </div>
