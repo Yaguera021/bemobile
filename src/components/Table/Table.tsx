@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { fetchEmployees } from "../../services/api";
+import { fetchEmployees } from "../../services/fetchAPI";
 import { Employees } from "../../types/Employees";
 
 import ellipse from "../../assets/ellipse.svg";
@@ -13,6 +13,22 @@ const Table: React.FC = () => {
   const [allEmployees, setAllEmployees] = useState<Employees[]>([]);
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<Employees[]>([]);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsDesktop(true);
+      } else {
+        setIsDesktop(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -44,9 +60,17 @@ const Table: React.FC = () => {
           <tr>
             <th>Foto</th>
             <th>Nome</th>
-            <th>
-              <img className='ellipse' src={ellipse} alt='' />
-            </th>
+            {isDesktop ? (
+              <>
+                <th>Cargo</th>
+                <th>Data de admissão</th>
+                <th>Telefone</th>
+              </>
+            ) : (
+              <th>
+                <img className='ellipse' src={ellipse} alt='' />
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -57,6 +81,7 @@ const Table: React.FC = () => {
                   employee={employee}
                   expandedRows={expandedRows}
                   toggleRow={toggleRow}
+                  isDesktop={isDesktop}
                 />
               ))
             : allEmployees.map((employee) => (
@@ -65,6 +90,7 @@ const Table: React.FC = () => {
                   employee={employee}
                   expandedRows={expandedRows}
                   toggleRow={toggleRow}
+                  isDesktop={isDesktop}
                 />
               ))}
         </tbody>

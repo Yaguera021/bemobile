@@ -10,12 +10,14 @@ interface TableRowProps {
   employee: Employees;
   expandedRows: number[];
   toggleRow: (id: number) => void;
+  isDesktop: boolean;
 }
 
 const TableRow: React.FC<TableRowProps> = ({
   employee,
   expandedRows,
   toggleRow,
+  isDesktop,
 }) => (
   <React.Fragment key={employee.id}>
     <tr>
@@ -23,17 +25,26 @@ const TableRow: React.FC<TableRowProps> = ({
         <img src={employee.image} alt={employee.name} />
       </td>
       <td>{employee.name}</td>
-      <td>
-        <button onClick={() => toggleRow(Number(employee.id))}>
-          {expandedRows.includes(Number(employee.id)) ? (
-            <img src={aDown} alt='arrow-down' />
-          ) : (
-            <img src={aUp} alt='arrow-up' />
-          )}
-        </button>
-      </td>
+      {isDesktop && (
+        <>
+          <td>{employee.job}</td>
+          <td>{formatDate(employee.admission_date)}</td>
+          <td>{formatPhoneNumber(employee.phone)}</td>
+        </>
+      )}
+      {!isDesktop && (
+        <td>
+          <button onClick={() => toggleRow(Number(employee.id))}>
+            {expandedRows.includes(Number(employee.id)) ? (
+              <img src={aDown} alt='arrow-down' />
+            ) : (
+              <img src={aUp} alt='arrow-up' />
+            )}
+          </button>
+        </td>
+      )}
     </tr>
-    {expandedRows.includes(Number(employee.id)) && (
+    {!isDesktop && expandedRows.includes(Number(employee.id)) && (
       <tr className='expanded-items'>
         <td>
           <div className='details'>
