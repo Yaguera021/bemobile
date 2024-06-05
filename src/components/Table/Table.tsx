@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-
 import { fetchEmployees } from "../../services/fetchAPI";
 import { Employees } from "../../types/Employees";
-
 import ellipse from "../../assets/ellipse.svg";
-
+import aDown from "../../assets/arrow-down.svg";
+import aUp from "../../assets/arrow-up.svg";
+import { formatDate, formatPhoneNumber } from "../../utils/formatFunctions";
 import "./Table.scss";
 import SearchBar from "../SearchBar/SearchBar";
-import TableRow from "../TableRow/TableRow";
 
 const Table: React.FC = () => {
   const [allEmployees, setAllEmployees] = useState<Employees[]>([]);
@@ -74,25 +73,61 @@ const Table: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredEmployees.length > 0
-            ? filteredEmployees.map((employee) => (
-                <TableRow
-                  key={employee.id}
-                  employee={employee}
-                  expandedRows={expandedRows}
-                  toggleRow={toggleRow}
-                  isDesktop={isDesktop}
-                />
-              ))
-            : allEmployees.map((employee) => (
-                <TableRow
-                  key={employee.id}
-                  employee={employee}
-                  expandedRows={expandedRows}
-                  toggleRow={toggleRow}
-                  isDesktop={isDesktop}
-                />
-              ))}
+          {(filteredEmployees.length > 0
+            ? filteredEmployees
+            : allEmployees
+          ).map((employee) => (
+            <React.Fragment key={employee.id}>
+              <tr>
+                <td>
+                  <img src={employee.image} alt={employee.name} />
+                </td>
+                <td>{employee.name}</td>
+                {isDesktop && (
+                  <>
+                    <td>{employee.job}</td>
+                    <td>{formatDate(employee.admission_date)}</td>
+                    <td>{formatPhoneNumber(employee.phone)}</td>
+                  </>
+                )}
+                {!isDesktop && (
+                  <td>
+                    <button onClick={() => toggleRow(Number(employee.id))}>
+                      {expandedRows.includes(Number(employee.id)) ? (
+                        <img src={aDown} alt='arrow-down' />
+                      ) : (
+                        <img src={aUp} alt='arrow-up' />
+                      )}
+                    </button>
+                  </td>
+                )}
+              </tr>
+              {!isDesktop && expandedRows.includes(Number(employee.id)) && (
+                <tr className='expanded-items'>
+                  <td>
+                    <div className='details'>
+                      <p>
+                        <strong>Cargo</strong>
+                        <span className='right-align'>{employee.job}</span>
+                      </p>
+                      <p>
+                        <strong>Data de admissão</strong>{" "}
+                        <span className='right-align'>
+                          {formatDate(employee.admission_date)}
+                        </span>
+                      </p>
+                      <p>
+                        <strong>Telefone</strong>
+                        <span className='right-align'>
+                          {formatPhoneNumber(employee.phone)}
+                        </span>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     </div>
