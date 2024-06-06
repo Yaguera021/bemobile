@@ -116,10 +116,15 @@ table {
 }
 
 @media (min-width: 768px) {
+  .table-wrapper {
+    width: 960px;
+    margin: 0 auto;
+  }
+
   table {
     tbody {
       tr {
-        width: 960px;
+        width: 950px;
       }
     }
   }
