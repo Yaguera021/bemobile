@@ -46,7 +46,7 @@ const Table: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='table-wrapper'>
       <div className='top-wrapper'>
         <h4>Funcionários</h4>
         <SearchBar
@@ -103,7 +103,11 @@ const Table: React.FC = () => {
                 )}
               </tr>
               {!isDesktop && expandedRows.includes(Number(employee.id)) && (
-                <tr className='expanded-items'>
+                <tr
+                  className={`expanded-items ${
+                    expandedRows.includes(Number(employee.id)) ? "expanded" : ""
+                  }`}
+                >
                   <td>
                     <div className='details'>
                       <p>
