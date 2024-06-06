@@ -1,45 +1,4 @@
-$gray-1: #dfdfdf;
-
 section {
   width: 100vw;
   padding: 0 20px;
-}
-
-.top-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: start;
-  padding: 20px 0;
-
-  h4 {
-    font-size: 24px;
-    font-weight: 500;
-  }
-
-  .input-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    position: relative;
-    margin-top: 28px;
-
-    input {
-      width: 100%;
-      padding: 12px 16px;
-      border: none;
-      outline: none;
-      border: 1px solid $gray-1;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    button {
-      border: none;
-      background-color: transparent;
-      position: absolute;
-      right: 0;
-      padding: 12px 12px;
-    }
-  }
 }
