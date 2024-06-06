@@ -25,3 +25,18 @@ $gray-1: #dfdfdf;
     padding: 12px 12px;
   }
 }
+
+@media (min-width: 768px) {
+  .top-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .input-container {
+    width: 30%;
+    margin-top: 0;
+  }
+}
