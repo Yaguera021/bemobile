@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchEmployees } from "../../services/fetchAPI";
-import { Employees } from "../../types/Employees";
+import { useEmployees } from "../../hooks/employeeHooks";
 import ellipse from "../../assets/ellipse.svg";
 import aDown from "../../assets/arrow-down.svg";
 import aUp from "../../assets/arrow-up.svg";
@@ -9,18 +8,13 @@ import "./Table.scss";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Table: React.FC = () => {
-  const [allEmployees, setAllEmployees] = useState<Employees[]>([]);
+  const { allEmployees, filteredEmployees } = useEmployees();
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<Employees[]>([]);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setIsDesktop(true);
-      } else {
-        setIsDesktop(false);
-      }
+      setIsDesktop(window.innerWidth > 768);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -29,30 +23,21 @@ const Table: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const getEmployees = async () => {
-      const data = await fetchEmployees();
-      setAllEmployees(data);
-    };
-    getEmployees();
-  }, []);
-
   const toggleRow = (id: number) => {
-    if (expandedRows.includes(id)) {
-      setExpandedRows(expandedRows.filter((rowId) => rowId !== id));
-    } else {
-      setExpandedRows([id]);
-    }
+    setExpandedRows(
+      expandedRows.includes(id)
+        ? expandedRows.filter((rowId) => rowId !== id)
+        : [id],
+    );
   };
+
+  console.log("RENDERIZOU");
 
   return (
     <div className='table-wrapper'>
       <div className='top-wrapper'>
         <h4>Funcionários</h4>
-        <SearchBar
-          employees={allEmployees}
-          setFilteredEmployees={setFilteredEmployees}
-        />
+        <SearchBar />
       </div>
       <table className='table'>
         <thead>
