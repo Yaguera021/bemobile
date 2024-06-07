@@ -1,11 +1,20 @@
 $gray-1: #dfdfdf;
 
+.top-wrapper {
+  margin-top: 20px;
+  h4 {
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
 .input-container {
   display: flex;
   align-items: center;
   width: 100%;
   position: relative;
   margin-top: 28px;
+  margin-bottom: 20px;
 
   input {
     width: 100%;
