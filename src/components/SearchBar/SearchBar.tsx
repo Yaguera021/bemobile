@@ -1,27 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Employees } from "../../types/Employees";
+import { useEmployees } from "../../hooks/employeeHooks";
 import Lupa from "../../assets/images/Lupa.png";
 import {
   cleanPhoneNumber,
   normalizeSearch,
   removeAccents,
 } from "../../utils/formatFunctions";
-
 import "./SearchBar.scss";
 
-interface SearchBarProps {
-  employees: Employees[];
-  setFilteredEmployees: (employees: Employees[]) => void;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({
-  employees,
-  setFilteredEmployees,
-}) => {
+const SearchBar: React.FC = () => {
+  const { allEmployees, setFilteredEmployees } = useEmployees();
   const [search, setSearch] = useState("");
 
   const normalizedSearch = normalizeSearch(search);
-  const filteredEmployees = employees.filter((employee) => {
+  const filteredEmployees = allEmployees.filter((employee) => {
     const normalizedName = removeAccents(employee.name.toLowerCase());
     const normalizedRole = removeAccents(employee.job.toLowerCase());
     const formattedPhone = cleanPhoneNumber(employee.phone);
@@ -33,11 +26,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   });
 
   useEffect(() => {
-    if (search) {
-      setFilteredEmployees(filteredEmployees);
-    } else {
-      setFilteredEmployees([]);
-    }
+    setFilteredEmployees(search ? filteredEmployees : []);
   }, [search]);
 
   return (
@@ -55,6 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </div>
   );
 };
-const memoizedSearchBar = React.memo(SearchBar);
 
-export default memoizedSearchBar;
+const MemoizedSearchBar = React.memo(SearchBar);
+
+export default MemoizedSearchBar;
