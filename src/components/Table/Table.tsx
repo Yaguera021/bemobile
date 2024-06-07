@@ -39,7 +39,7 @@ const Table: React.FC = () => {
 
   const toggleRow = (id: number) => {
     if (expandedRows.includes(id)) {
-      setExpandedRows([]);
+      setExpandedRows(expandedRows.filter((rowId) => rowId !== id));
     } else {
       setExpandedRows([id]);
     }
@@ -103,12 +103,8 @@ const Table: React.FC = () => {
                 )}
               </tr>
               {!isDesktop && expandedRows.includes(Number(employee.id)) && (
-                <tr
-                  className={`expanded-items ${
-                    expandedRows.includes(Number(employee.id)) ? "expanded" : ""
-                  }`}
-                >
-                  <td>
+                <tr className='expanded-items expanded'>
+                  <td colSpan={5}>
                     <div className='details'>
                       <p>
                         <strong>Cargo</strong>
