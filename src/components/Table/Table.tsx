@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useEmployees } from "../../hooks/employeeHooks";
+import { formatDate, formatPhoneNumber } from "../../utils/formatFunctions";
+
 import ellipse from "../../assets/ellipse.svg";
 import aDown from "../../assets/arrow-down.svg";
 import aUp from "../../assets/arrow-up.svg";
-import { formatDate, formatPhoneNumber } from "../../utils/formatFunctions";
+
 import "./Table.scss";
 import SearchBar from "../SearchBar/SearchBar";
 
