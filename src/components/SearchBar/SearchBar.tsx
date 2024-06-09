@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+
 import { useEmployees } from "../../hooks/employeeHooks";
-import Lupa from "../../assets/images/Lupa.png";
 import {
   cleanPhoneNumber,
   normalizeSearch,
   removeAccents,
 } from "../../utils/formatFunctions";
+
+import Lupa from "../../assets/images/Lupa.png";
+
 import "./SearchBar.scss";
 
 const SearchBar: React.FC = () => {
