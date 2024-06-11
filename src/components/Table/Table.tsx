@@ -29,11 +29,9 @@ const Table: React.FC = () => {
     setExpandedRows(
       expandedRows.includes(id)
         ? expandedRows.filter((rowId) => rowId !== id)
-        : [id],
+        : [...expandedRows, id],
     );
   };
-
-  console.log("RENDERIZOU");
 
   return (
     <div className='table-wrapper'>
@@ -41,6 +39,7 @@ const Table: React.FC = () => {
         <h4>Funcionários</h4>
         <SearchBar />
       </div>
+      <div className='table-table-wrapper'></div>
       <table className='table'>
         <thead>
           <tr>
@@ -95,19 +94,15 @@ const Table: React.FC = () => {
                     <div className='details'>
                       <p>
                         <strong>Cargo</strong>
-                        <span className='right-align'>{employee.job}</span>
+                        <span>{employee.job}</span>
                       </p>
                       <p>
                         <strong>Data de admissão</strong>{" "}
-                        <span className='right-align'>
-                          {formatDate(employee.admission_date)}
-                        </span>
+                        <span>{formatDate(employee.admission_date)}</span>
                       </p>
                       <p>
                         <strong>Telefone</strong>
-                        <span className='right-align'>
-                          {formatPhoneNumber(employee.phone)}
-                        </span>
+                        <span>{formatPhoneNumber(employee.phone)}</span>
                       </p>
                     </div>
                   </td>
