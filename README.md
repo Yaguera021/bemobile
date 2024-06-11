@@ -8,7 +8,7 @@ Nome, Cargo e Telefone.
 
 ## Aplicação
 
-[![Demo da Aplicação]](https://www.youtube.com/watch?v=GzSZ0GYDGj0&ab_channel=YagoCruz)
+[![Demo da Aplicação](https://www.youtube.com/watch?v=GzSZ0GYDGj0&ab_channel=YagoCruz)](https://www.youtube.com/watch?v=GzSZ0GYDGj0&ab_channel=YagoCruz)
 
 ## Instalação
 
