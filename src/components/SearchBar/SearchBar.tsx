@@ -8,8 +8,6 @@ import {
   removeAccents,
 } from "../../utils/formatFunctions";
 
-import Lupa from "../../assets/images/Lupa.png";
-
 import "./SearchBar.scss";
 
 const SearchBar: React.FC = () => {
@@ -41,9 +39,6 @@ const SearchBar: React.FC = () => {
         value={search}
         name='search'
       />
-      <button className='search-button'>
-        <img src={Lupa} alt='search' />
-      </button>
     </div>
   );
 };
