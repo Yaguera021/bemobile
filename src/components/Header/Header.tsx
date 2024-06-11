@@ -1,4 +1,4 @@
-import Logo from "../../assets/images/BeLogo.png";
+import Logo from "../../assets/images/beLogo.png";
 
 import "./Header.scss";
 

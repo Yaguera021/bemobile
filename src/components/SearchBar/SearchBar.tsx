@@ -15,6 +15,7 @@ const SearchBar: React.FC = () => {
   const [search, setSearch] = useState("");
 
   const normalizedSearch = normalizeSearch(search);
+
   const filteredEmployees = allEmployees.filter((employee) => {
     const normalizedName = removeAccents(employee.name.toLowerCase());
     const normalizedRole = removeAccents(employee.job.toLowerCase());
